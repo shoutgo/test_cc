@@ -1,0 +1,18 @@
+	
+	CC = gcc -lstdc++
+
+main: main.o mytool1.o mytool2.o
+	$(CC) -o $@ $^
+	@echo by makefile2!
+
+main.o: main.cc mytool1.h mytool2.h
+	$(CC) -c $<
+
+mytool1.o: mytool1.cc mytool1.h
+	$(CC) -c $<
+
+mytool2.o: mytool2.cc mytool2.h
+	$(CC) -c $< 
+
+clean:
+	-rm main *.o *~
