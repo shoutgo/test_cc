@@ -1,14 +1,10 @@
-
-
+#include "mytool1.h"
 #include <cstdio>
 
-#include "mytool1.h"
-
-#include <iomanip>
-#include <iostream>
-#include <ostream>
-#include <string>
-
+// #include <iomanip>
+// #include <iostream>
+// #include <ostream>
+// #include <string>
 
 using namespace std;
 
@@ -23,4 +19,3 @@ ostream & operator<<(ostream & os, setx s)
   os << s.c;
   return os;
 }
-

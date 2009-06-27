@@ -1,8 +1,5 @@
-
-
-#include <cstdio>
-
 #include "mytool2.h"
+#include <cstdio>
 
 void
 mytool2_print (char *print_str)
