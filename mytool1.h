@@ -39,7 +39,7 @@ private:
 public:
   setx (string x):c (x) {
   }
-  friend ostream & operator<< (ostream & os, setx s);
+  friend ostream & operator<< (ostream & os, setx s); /// setx: 去掉了 setx s 之间的 & 
 };
 
 void mytool1_print (char *print_str);

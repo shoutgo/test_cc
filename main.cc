@@ -21,8 +21,55 @@
 #include <sys/types.h>
 
 // #include "conio.h"	// _kbhit() _getch()
-#include <stdio.h>
 // #define ___ESC	if ( _kbhit() && ( _getch() == 0x1b ) )	break; 
+#include <stdlib.h>
+#include <stdio.h>
+#include <termios.h>
+#include <string.h>
+
+static struct termios stored_settings;
+
+void set_keypress(void)
+{
+	struct termios new_settings;
+	tcgetattr(0,&stored_settings);
+	new_settings = stored_settings;
+	/* Disable canonical mode, and set buffer size to 1 byte */
+	new_settings.c_lflag &= (~ICANON);
+	new_settings.c_lflag &= (~ECHO);
+	new_settings.c_cc[VTIME] = 0;
+	new_settings.c_cc[VMIN] = 1;
+
+	tcsetattr(0,TCSANOW,&new_settings);
+	return;
+}
+
+void reset_keypress(void)
+{
+	tcsetattr(0,TCSANOW,&stored_settings);
+	return;
+} 
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+int kbhit(){
+           fd_set rfds;
+           struct timeval tv;
+           int retval;
+           /* Watch stdin (fd 0) to see when it has input. */
+           FD_ZERO(&rfds);
+           FD_SET(0, &rfds);
+	   /* Wait up to some seconds. */
+ 	   tv.tv_sec = 0;
+	   tv.tv_usec = 0;
+ 	   return select(1, &rfds, NULL, NULL, &tv);
+}
+
+#define ___ESC	if ( kbhit() && ( getchar() == 27 ) ) break;
 
 #include "stdarg.h"	// va_list va_start() va_arg() va_end()
 template <typename T, typename S>
@@ -33,7 +80,7 @@ public:
 		va_list ptr; 
 		va_start(ptr, numb); 
 		while(numb--){
-			S t=va_arg(ptr, S); 
+			S t=va_arg(ptr, S); /// BIND: 加了=
 			vt.push_back(static_cast<T>(t)); 
 		}
 		va_end(ptr); 
@@ -62,14 +109,16 @@ main (int argc, char **argv)
   for (int i=0;i<vs.size();++i)
 	  cout << vs[i] << endl;
   
-  ::mkdir("newdir",0777);
+  ::mkdir("newdir",0777); /// mkdir: 非_mkdir
 
+  set_keypress(); /// ___ESC: 注意在 for 之外有代码
   for (int i=0;i<100;++i) 
   {
-	//___ESC;
+	___ESC;
 	cout << "y" << flush;
-  	sleep(1);
+  	sleep(1); /// sleep: 非Sleep
   }
+  reset_keypress();
 
   return 0;
 }
