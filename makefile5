@@ -1,0 +1,7 @@
+sources = foo.c bar.c
+include $(sources:.c=.d)
+
+%.d: %.c
+	$(CC) -M $(CPPFLAGS) $< > $@.$$$$; \
+	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	rm -f $@.$$$$
