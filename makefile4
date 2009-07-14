@@ -1,4 +1,4 @@
-	CC = gcc -lstdc++
+	CC = gcc -g -lstdc++
 
 main: main.o mytool1.o mytool2.o
 	$(CC) -o $@ $^

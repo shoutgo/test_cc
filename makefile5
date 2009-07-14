@@ -1,7 +1,15 @@
-sources = foo.c bar.c
-include $(sources:.c=.d)
+sources = main.cc mytool1.cc mytool2.cc
+include $(sources:.cc=.d)
+CC = gcc -g -lstdc++
 
-%.d: %.c
+main: main.o mytool1.o mytool2.o
+	$(CC) -o $@ $^
+.cc.o: 
+	$(CC) -c $< 
+%.d: %.cc
 	$(CC) -M $(CPPFLAGS) $< > $@.$$$$; \
 	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
 	rm -f $@.$$$$
+
+clean:
+	-rm main *.o *~

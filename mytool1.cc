@@ -4,7 +4,7 @@
 // #include <iomanip>
 // #include <iostream>
 // #include <ostream>
-// #include <string>
+#include <string>
 
 using namespace std;
 
@@ -14,7 +14,7 @@ mytool1_print (char *print_str)
   printf ("This is mytool1 print %s \n", print_str);
 }
 
-ostream & operator<<(ostream & os, setx s)
+ostream & operator<< (ostream & os, setx s)
 {
   os << s.c;
   return os;
