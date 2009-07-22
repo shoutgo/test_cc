@@ -1,5 +1,5 @@
 #CC = gcc -g -masm=intel
-CC = gcc -g -pg
+CC = gcc -g -gdwarf-2 -pg -fprofile-arcs -ftest-coverage
 
 main: main.o mytool1.o mytool2.o
 	$(CC) -lstdc++ -o main main.o mytool1.o mytool2.o

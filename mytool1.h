@@ -27,6 +27,8 @@
 
 using namespace std;
 
+const string PATH = "newdir/";
+
 const string R = "\033[1;33;44m";
 const string G = "\033[1;32;43m";
 const string B = "\033[1;32;44m";

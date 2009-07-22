@@ -167,12 +167,14 @@ readbuf (string filename)
   return s;
 }
 
+
 vector < string > getfilenames (string path, string type);
 
 vector < string > getfilenames (string path, string type)
 {
   string command = "ls " + path + type + " > tmp";
-  system (command.c_str ());
+  //system (command.c_str ());
+  system (("ls " + path + type + " > tmp").c_str ());
   string names = readbuf ("tmp");
   int p;
   vector < string > vecs;
@@ -189,7 +191,7 @@ using namespace std;
 int
 main (int argc, char **argv)
 {
-  vector < string > vecs = getfilenames ("newdir/", "*.sgf");
+  vector < string > vecs = getfilenames (PATH, "*.sgf");
   for (int i = 0; i < vecs.size (); ++i)
     cout << vecs[i] << endl;
 
